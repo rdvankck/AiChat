@@ -13,7 +13,7 @@ function App() {
 
   const [messages, setMessages] = useState([
     {
-      text: 'Merhaba! Ben yerel yapay zeka modelin. Bana bir soru sor.',
+      text: 'Hi there! Ask me something.',
       sender: 'bot',
       timestamp: getFormattedTime()
     }
@@ -45,13 +45,13 @@ function App() {
 
    
     try {
-      // Backend'imize POST isteği atıyoruz
+      // Post request our backend
       const response = await axios.post('http://localhost:3000/api/chat', {
-        prompt: currentInputValue // Kullanıcının yazdığı metni gönder
+        prompt: currentInputValue 
       });
 
       const botMessage = {
-        text: response.data.reply, // Backend'den gelen gerçek cevabı kullan
+        text: response.data.reply, 
         sender: 'bot',
         timestamp: getFormattedTime(),
       };
@@ -59,15 +59,15 @@ function App() {
       setMessages(prevMessages => [...prevMessages, botMessage]);
 
     } catch (error) {
-      console.error("Backend'e istek atarken hata oluştu:", error);
+      console.error("Backend request error:", error);
       const errorMessage = {
-        text: "Üzgünüm, yapay zeka sunucusuna bağlanırken bir hata oluştu.",
+        text: "Im sorry, we have a connection problem with backend.",
         sender: 'bot',
         timestamp: getFormattedTime(),
       };
       setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
-      setIsTyping(false); // Cevap gelse de gelmese de "yazıyor" durumunu bitir
+      setIsTyping(false);
     }
     
   };
@@ -85,7 +85,7 @@ function App() {
         {}
         {isTyping && (
           <div className="message bot typing">
-            <div className="message-text">Bot yazıyor...</div>
+            <div className="message-text">Bot texting...</div>
           </div>
         )}
       </div>
@@ -94,10 +94,10 @@ function App() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Mesajını buraya yaz..."
+          placeholder="Text your message here..."
           autoFocus
         />
-        <button type="submit">Gönder</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   )

@@ -1,7 +1,5 @@
-// chatbot-arayuzu/src/App.jsx - NİHAİ KOD
-
 import { useState, useEffect } from 'react';
-import axios from 'axios'; // axios'u projemize dahil ettik
+import axios from 'axios'; 
 import './App.css';
 
 function App() {
@@ -21,7 +19,7 @@ function App() {
     }
   ]);
   const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false); // YENİ: Bot'un yazma durumunu tutan state
+  const [isTyping, setIsTyping] = useState(false); 
 
   useEffect(() => {
     const chatWindow = document.querySelector('.chat-window');
@@ -29,8 +27,8 @@ function App() {
   }, [messages, isTyping]);
 
 
-  // GÜNCELLENDİ: Bu fonksiyon artık backend'e gerçek bir API isteği atıyor!
-  const handleSendMessage = async (e) => { // Fonksiyonu async yaptık
+
+  const handleSendMessage = async (e) => { // async Function
     e.preventDefault();
     if (inputValue.trim() === '') return;
 
@@ -41,11 +39,11 @@ function App() {
     };
 
     setMessages(prevMessages => [...prevMessages, userMessage]);
-    const currentInputValue = inputValue; // inputValue'u bir değişkene kaydet
+    const currentInputValue = inputValue; 
     setInputValue('');
-    setIsTyping(true); // Bot cevap vermeye hazırlanıyor
+    setIsTyping(true); 
 
-    // --- setTimeout SİLİNDİ, yerine try-catch ile API isteği geldi ---
+   
     try {
       // Backend'imize POST isteği atıyoruz
       const response = await axios.post('http://localhost:3000/api/chat', {
@@ -71,7 +69,7 @@ function App() {
     } finally {
       setIsTyping(false); // Cevap gelse de gelmese de "yazıyor" durumunu bitir
     }
-    // --- API isteği sonu ---
+    
   };
 
   return (
@@ -84,7 +82,7 @@ function App() {
             <div className="message-time">{message.timestamp}</div>
           </div>
         ))}
-        {/* YENİ: Bot yazarken bu kısım görünecek */}
+        {}
         {isTyping && (
           <div className="message bot typing">
             <div className="message-text">Bot yazıyor...</div>

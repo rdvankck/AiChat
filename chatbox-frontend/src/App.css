@@ -18,7 +18,7 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* YENİ: Başlık için basit bir stil */
+
 h1 {
   text-align: center;
   font-size: 1.2rem;
@@ -38,13 +38,13 @@ h1 {
   gap: 12px;
 }
 
-/* GÜNCELLENDİ: Mesaj balonu artık içeriğini (metin ve saat) düzenlemek için flex kullanıyor */
+
 .message {
   padding: 10px 15px;
   border-radius: 18px;
   max-width: 75%;
-  display: flex; /* YENİ */
-  flex-direction: column; /* YENİ */
+  display: flex; 
+  flex-direction: column; 
   color:black;
 }
 
@@ -62,19 +62,19 @@ h1 {
   border-bottom-left-radius: 4px;
 }
 
-/* === YENİ EKLENEN STİLLER === */
 
-/* Sadece mesaj metnini içeren kısım */
+
+
 .message-text {
   word-wrap: break-word;
 }
 
 /* Saati tutan kısım */
 .message-time {
-  font-size: 0.75rem; /* Yazıdan daha küçük */
+  font-size: 0.75rem; 
   margin-top: 5px;
-  align-self: flex-end; /* Baloncuğun sağ altına yaslar */
-  opacity: 0.7; /* Biraz soluk görünmesi için */
+  align-self: flex-end; 
+  opacity: 0.7; 
 }
 
 /* Kullanıcı mesajındaki saatin rengi */
@@ -87,7 +87,7 @@ h1 {
   color: #666;
 }
 
-/* === STİLLERİN SONU === */
+
 
 .input-form {
   display: flex;
@@ -117,8 +117,6 @@ h1 {
 .input-form button:hover {
   background-color: #0056b3;
 }
-
-/* App.css'in en altına ekle */
 
 .message.typing .message-text {
   font-style: italic;

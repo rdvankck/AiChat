@@ -1,0 +1,126 @@
+body {
+  background-color: #f0f2f5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chatbot-container {
+  width: 50vh;
+  height: 50vh;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* YENİ: Başlık için basit bir stil */
+h1 {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 15px;
+  margin: 0;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+
+.chat-window {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* GÜNCELLENDİ: Mesaj balonu artık içeriğini (metin ve saat) düzenlemek için flex kullanıyor */
+.message {
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 75%;
+  display: flex; /* YENİ */
+  flex-direction: column; /* YENİ */
+  color:black;
+}
+
+.message.user {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.message.bot {
+  background-color: #e9e9eb;
+  color: black;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+/* === YENİ EKLENEN STİLLER === */
+
+/* Sadece mesaj metnini içeren kısım */
+.message-text {
+  word-wrap: break-word;
+}
+
+/* Saati tutan kısım */
+.message-time {
+  font-size: 0.75rem; /* Yazıdan daha küçük */
+  margin-top: 5px;
+  align-self: flex-end; /* Baloncuğun sağ altına yaslar */
+  opacity: 0.7; /* Biraz soluk görünmesi için */
+}
+
+/* Kullanıcı mesajındaki saatin rengi */
+.message.user .message-time {
+  color: #e0e0e0;
+}
+
+/* Bot mesajındaki saatin rengi */
+.message.bot .message-time {
+  color: #666;
+}
+
+/* === STİLLERİN SONU === */
+
+.input-form {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.input-form input {
+  flex-grow: 1;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.input-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.input-form button:hover {
+  background-color: #0056b3;
+}
+
+/* App.css'in en altına ekle */
+
+.message.typing .message-text {
+  font-style: italic;
+  color: #666;
+}

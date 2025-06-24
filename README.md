@@ -44,3 +44,5 @@ This project is licensed under the MIT License.
 
 
 ## Ollama used for this project.
+ 1. Ollama -> Deepseek-coder
+

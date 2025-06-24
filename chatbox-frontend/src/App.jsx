@@ -33,7 +33,7 @@ function App() {
   // Set the initial welcome message when the component mounts for the first time
   useEffect(() => {
     setMessages([{
-      text: 'Hello Rıdvan! How can I help you today?',
+      text: 'Hello there! How can I help you today?',
       sender: 'bot',
       timestamp: getFormattedTime()
     }]);
@@ -124,7 +124,7 @@ function App() {
         {messages.length === 1 && messages[0].text.includes('Hello') ? (
           <div className="welcome-screen">
             <div className="welcome-logo"><GeminiLogo /></div>
-            <h1>Hello, Rıdvan</h1>
+            <h1>Hello, there</h1>
             <p>How can I help you today?</p>
             <div className="prompt-cards">
               <PromptCard title="Explain how to create a React component, with code" onClick={() => handleSendMessage("Explain how to create a React component, with code")} />

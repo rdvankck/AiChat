@@ -223,9 +223,9 @@ body {
   color: var(--text-color);
   font-size: 1rem;
   resize: none;
-  height: 24px; 
+  height: 20px; /* Yüksekliği JS ile ayarlanabilir */
   max-height: 100px;
-  line-height: 24px;
+  line-height: 20px;
   padding: 8px 0;
   outline: none;
 }

@@ -341,3 +341,49 @@ body {
   color: #fff;
   font-weight: 500;
 }
+
+.mic-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.mic-btn:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.mic-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--secondary-text-color);
+}
+
+/* Style for when the microphone is actively listening */
+.mic-btn.listening {
+  background-color: #d930252a; /* Reddish glow */
+  animation: pulse 1.5s infinite;
+}
+
+.mic-btn.listening svg {
+    fill: #d93025; /* Red color for the icon */
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 #d9302550;
+  }
+  70% {
+    box-shadow: 0 0 0 10px #d9302500;
+  }
+  100% {
+    box-shadow: 0 0 0 0 #d9302500;
+  }
+}

@@ -1,16 +1,14 @@
-// src/App.jsx - REFACTORED TO MANAGE MULTIPLE CHATS
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from './Sidebar'; // Import the new component
-import ChatWindow from './ChatWindow'; // Import the new component
+import Sidebar from './Sidebar';
+import ChatWindow from './ChatWindow';
 import './App.css';
 
 function App() {
   // --- State Management for Multiple Chats ---
-  const [chats, setChats] = useState([]); // Holds all chat objects {id, title, messages}
-  const [currentChatId, setCurrentChatId] = useState(null); // ID of the currently active chat
-  const [inputValue, setInputValue] = useState(''); // Input state is still managed here
+  const [chats, setChats] = useState([]);
+  const [currentChatId, setCurrentChatId] = useState(null);
+  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
   // --- Load chats from localStorage on initial render ---
@@ -25,28 +23,25 @@ function App() {
       if(savedCurrentId && parsedChats.some(c => c.id === savedCurrentId)) {
         setCurrentChatId(savedCurrentId);
       } else if (parsedChats.length > 0) {
-        // Fallback to the most recent chat if the saved ID is invalid
         setCurrentChatId(parsedChats[0].id);
       } else {
-        // If there are no chats, create a new one
         handleNewChat();
       }
     } else {
-      // If no history exists, create the very first chat
       handleNewChat();
     }
-  }, []); // Empty array ensures this runs only once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Disabling eslint warning because handleNewChat dependency would cause a loop
 
   // --- Save chats to localStorage whenever they change ---
   useEffect(() => {
-    // Don't save the initial empty array
     if (chats.length > 0) {
         localStorage.setItem('chat_history', JSON.stringify(chats));
     }
     if (currentChatId) {
         localStorage.setItem('current_chat_id', currentChatId);
     }
-  }, [chats, currentChatId]); // Reruns when chats or currentChatId changes
+  }, [chats, currentChatId]);
 
 
   // --- Helper Functions ---
@@ -54,13 +49,13 @@ function App() {
 
   // --- Chat Management Functions ---
   const handleNewChat = () => {
-    const newChatId = Date.now().toString(); // Simple unique ID
+    const newChatId = Date.now().toString();
     const newChat = {
       id: newChatId,
-      title: 'New Chat',
-      messages: [], // A new chat starts with no messages
+      title: 'New Chat', // Initially titled "New Chat"
+      messages: [],
     };
-    setChats(prev => [newChat, ...prev]); // Add new chat to the beginning of the list
+    setChats(prev => [newChat, ...prev]);
     setCurrentChatId(newChatId);
   };
 
@@ -69,22 +64,26 @@ function App() {
   };
 
 
-  // --- Core Logic: Sending a Message ---
+  // --- Core Logic: Sending a Message (WITH BUG FIX) ---
   const handleSendMessage = async (promptText) => {
     if (!promptText || promptText.trim() === '' || !currentChatId) return;
 
     const userMessage = { text: promptText, sender: 'user', timestamp: getFormattedTime() };
     
-    // Find the current chat and add the user message
-    const updatedChats = chats.map(chat => {
-      if (chat.id === currentChatId) {
-        // If it's a new chat, set its title from the first prompt
-        const newTitle = chat.messages.length === 0 ? promptText.substring(0, 30) + '...' : chat.title;
-        return { ...chat, title: newTitle, messages: [...chat.messages, userMessage] };
-      }
-      return chat;
+    // Step 1: Add user message and update title if it's the first message
+    let preliminaryUpdatedChats;
+    setChats(prevChats => {
+      preliminaryUpdatedChats = prevChats.map(chat => {
+        if (chat.id === currentChatId) {
+          const isFirstMessage = chat.messages.length === 0;
+          const newTitle = isFirstMessage ? promptText.substring(0, 35) + '...' : chat.title;
+          return { ...chat, title: newTitle, messages: [...chat.messages, userMessage] };
+        }
+        return chat;
+      });
+      return preliminaryUpdatedChats;
     });
-    setChats(updatedChats);
+
     setInputValue('');
     setIsTyping(true);
 
@@ -92,31 +91,30 @@ function App() {
       const response = await axios.post('http://localhost:3000/api/chat', { prompt: promptText });
       const botMessage = { text: response.data.reply, sender: 'bot', timestamp: getFormattedTime() };
 
-      // Add the bot's response to the current chat
-      const finalChats = chats.map(chat => {
+      // Step 2: Add bot's response using a functional update to avoid stale state
+      setChats(prevChats => prevChats.map(chat => {
         if (chat.id === currentChatId) {
           return { ...chat, messages: [...chat.messages, botMessage] };
         }
         return chat;
-      });
-      setChats(finalChats);
+      }));
 
     } catch (error) {
       console.error("Backend request failed:", error);
       const errorMessage = { text: "Sorry, failed to connect to the AI server.", sender: 'bot', timestamp: getFormattedTime() };
-      const errorChats = chats.map(chat => {
+      
+      // Add error message using a functional update
+      setChats(prevChats => prevChats.map(chat => {
         if (chat.id === currentChatId) {
           return { ...chat, messages: [...chat.messages, errorMessage] };
         }
         return chat;
-      });
-      setChats(errorChats);
+      }));
     } finally {
       setIsTyping(false);
     }
   };
 
-  // Find the messages for the currently selected chat
   const activeChatMessages = chats.find(chat => chat.id === currentChatId)?.messages || [];
 
   return (

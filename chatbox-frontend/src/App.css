@@ -97,9 +97,8 @@ body {
   margin: 0;
 }
 
-/* === SIDEBAR CHAT ITEM & OPTIONS MENU STYLES === */
 .history-item {
-  position: relative; /* Crucial for positioning the options menu */
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -156,8 +155,8 @@ body {
 
 .options-menu {
   position: absolute;
-  top: 10px; 
-  right: 40px;
+  top: 40px; 
+  right: 10px;
   background-color: #343541;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -252,12 +251,47 @@ body {
 .message { display: flex; flex-direction: column; padding: 0; }
 .message-text { line-height: 1.6; }
 .message-text p { margin: 0 0 10px 0; }
+
+/* === STYLES FOR CODE BLOCKS (FINAL & FORCED FIX) === */
 .message-text pre {
-  background-color: #0d0d0d; padding: 15px; border-radius: 8px; overflow-x: auto;
-  border: 1px solid var(--border-color);
+  padding: 0; margin: 0; background-color: transparent;
+  border: none; white-space: normal;
 }
-.message-text code { font-family: 'Courier New', Courier, monospace; }
-.message-time { font-size: 0.75rem; margin-top: 8px; color: var(--secondary-text-color); align-self: flex-start; }
+.code-block-wrapper {
+  position: relative; margin: 1em 0; border-radius: 8px;
+  border: 1px solid var(--border-color); overflow: hidden;
+}
+.code-block-wrapper pre {
+  padding: 1rem !important;
+  padding-top: 3.5rem !important;
+  margin: 0 !important;
+  background-color: #0d0d0d !important;
+}
+.code-block-wrapper pre,
+.code-block-wrapper pre *,
+.code-block-wrapper code,
+.code-block-wrapper span {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    word-wrap: break-word !important;
+}
+.code-header {
+  position: absolute; top: 0; left: 0; right: 0; display: flex;
+  justify-content: space-between; align-items: center; padding: 8px 12px;
+  background-color: #343541; height: 20px; z-index: 1;
+}
+.code-language {
+  color: var(--secondary-text-color); font-size: 0.8rem; text-transform: lowercase;
+}
+.copy-btn {
+  background-color: var(--card-bg-color); color: var(--secondary-text-color);
+  border: 1px solid var(--border-color); border-radius: 6px; padding: 4px 8px;
+  font-size: 0.8rem; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease;
+}
+.copy-btn:hover { background-color: var(--card-hover-bg); color: var(--text-color); }
+
+
+/* "Bot is typing..." shimmer animation */
 @keyframes shimmer {
   0% { background-position: -400px 0; } 100% { background-position: 400px 0; }
 }
@@ -285,7 +319,6 @@ body {
 .input-form button[type="submit"] { background-color: var(--card-hover-bg); }
 .input-form button:hover:not(:disabled) { background-color: #4f5052; }
 .input-form button:disabled { opacity: 0.5; cursor: not-allowed; }
-
 .input-form button svg {
   width: 20px; height: 20px; fill: var(--text-color); flex-shrink: 0; transition: all 0.2s ease;
 }

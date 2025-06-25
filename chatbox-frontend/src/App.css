@@ -1,4 +1,3 @@
-
 :root {
   --background-color: #131314;
   --main-content-bg: #1e1f20;
@@ -12,6 +11,7 @@
   --border-color: #444;
 }
 
+/* === GENERAL BODY STYLES === */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -20,12 +20,29 @@ body {
   overflow: hidden;
 }
 
-.app-container {
+/* === LAYOUT STYLES === */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: var(--main-content-bg);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.chat-area {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vw;
 }
 
 .main-content {
@@ -41,7 +58,67 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* === SIDEBAR SPECIFIC STYLES === */
+.new-chat-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: var(--card-bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease;
+}
 
+.new-chat-btn:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.history-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--secondary-text-color);
+  padding: 0 5px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.chat-history-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-item {
+  padding: 10px 15px;
+  border-radius: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.history-item:hover {
+  background-color: var(--card-bg-color);
+}
+
+.history-item.active {
+  background-color: var(--accent-color-start);
+  color: #fff;
+  font-weight: 500;
+}
+
+
+/* === WELCOME SCREEN & CARDS === */
 .welcome-screen {
   flex-grow: 1;
   display: flex;
@@ -113,7 +190,7 @@ body {
   margin: 0;
 }
 
-
+/* === CHAT WINDOW & MESSAGES === */
 .chat-window {
   flex-grow: 1;
   padding: 20px 20px 0 20px;
@@ -186,7 +263,7 @@ body {
   align-self: flex-start;
 }
 
-
+/* "Bot is typing..." shimmer animation */
 @keyframes shimmer {
   0% { background-position: -400px 0; }
   100% { background-position: 400px 0; }
@@ -200,8 +277,7 @@ body {
   border-radius: 4px;
 }
 
-
-
+/* === INPUT AREA === */
 .input-area-container {
   padding: 20px;
 }
@@ -223,9 +299,9 @@ body {
   color: var(--text-color);
   font-size: 1rem;
   resize: none;
-  height: 20px; /* Yüksekliği JS ile ayarlanabilir */
+  height: 24px;
   max-height: 100px;
-  line-height: 20px;
+  line-height: 24px;
   padding: 8px 0;
   outline: none;
 }
@@ -253,137 +329,36 @@ body {
   cursor: not-allowed;
 }
 
+/* === FINAL ICON STYLE FIX === */
+/* This single rule will control all icons inside the input form's buttons */
 .input-form button svg {
   width: 20px;
   height: 20px;
   fill: var(--text-color);
+  
+  /* THIS IS THE FIX: Prevents the icon from shrinking inside the button */
+  flex-shrink: 0; 
+  
+  transition: all 0.2s ease;
 }
 
-.app-layout {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--background-color);
-}
-
-.sidebar {
-  width: 260px;
-  background-color: var(--main-content-bg);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--border-color);
-  flex-shrink: 0;
-}
-
-.chat-area {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.new-chat-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 15px;
-  border-radius: 8px;
-  background-color: var(--card-bg-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 20px;
-  transition: background-color 0.2s ease;
-}
-
-.new-chat-btn:hover {
-  background-color: var(--card-hover-bg);
-}
-
-.history-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--secondary-text-color);
-  padding: 0 5px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-
-.chat-history-list {
-  flex-grow: 1;
-  overflow-y: auto;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.history-item {
-  padding: 10px 15px;
-  border-radius: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.history-item:hover {
-  background-color: var(--card-bg-color);
-}
-
-.history-item.active {
-  background-color: var(--accent-color-start);
-  color: #fff;
-  font-weight: 500;
-}
-
-.mic-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background-color 0.2s ease;
-}
-
-.mic-btn:hover {
-  background-color: var(--card-hover-bg);
-}
-
-.mic-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: var(--secondary-text-color);
-}
-
-/* Style for when the microphone is actively listening */
+/* Specific style for the listening microphone icon to turn it red */
 .mic-btn.listening {
-  background-color: #d930252a; /* Reddish glow */
+  background-color: #d930252a;
   animation: pulse 1.5s infinite;
 }
 
 .mic-btn.listening svg {
-    fill: #d93025; /* Red color for the icon */
+  fill: #d93025;
 }
 
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 #d9302550;
-  }
-  70% {
-    box-shadow: 0 0 0 10px #d9302500;
-  }
-  100% {
-    box-shadow: 0 0 0 0 #d9302500;
-  }
+  0% { box-shadow: 0 0 0 0 #d9302550; }
+  70% { box-shadow: 0 0 0 10px #d9302500; }
+  100% { box-shadow: 0 0 0 0 #d9302500; }
+}
+
+/* A nice hover effect for all icons */
+.input-form button:not(:disabled):hover svg {
+  transform: scale(1.1);
 }

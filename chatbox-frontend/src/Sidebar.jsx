@@ -1,5 +1,3 @@
-// src/Sidebar.jsx - UPDATED WITH NEW ICONS AND MENU STRUCTURE
-
 import React, { useState, useRef, useEffect } from 'react';
 
 // --- SVG Icon Components ---

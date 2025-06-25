@@ -1,5 +1,3 @@
-// FILE: chatbot-frontend/src/App.jsx
-
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';

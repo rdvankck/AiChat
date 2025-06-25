@@ -1,5 +1,3 @@
-// FILE: chatbot-frontend/src/ChatWindow.jsx
-// FINAL VERSION WITH ALL FIXES
 
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';

@@ -1,4 +1,4 @@
-/* === ROOT VARIABLES (THEME) === */
+/*  ROOT VARIABLES   */
 :root {
   --background-color: #131314;
   --main-content-bg: #1e1f20;
@@ -12,7 +12,7 @@
   --border-color: #444;
 }
 
-/* === GENERAL BODY STYLES === */
+/* GENERAL BODY STYLES  */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -21,7 +21,7 @@ body {
   overflow: hidden;
 }
 
-/* === LAYOUT STYLES === */
+/*  LAYOUT STYLES  */
 .app-layout {
   display: flex;
   height: 100vh;

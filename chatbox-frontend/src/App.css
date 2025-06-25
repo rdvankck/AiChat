@@ -1,3 +1,4 @@
+/* === ROOT VARIABLES (THEME) === */
 :root {
   --background-color: #131314;
   --main-content-bg: #1e1f20;
@@ -96,15 +97,18 @@ body {
   margin: 0;
 }
 
+/* === SIDEBAR CHAT ITEM & OPTIONS MENU STYLES === */
 .history-item {
-  padding: 10px 15px;
+  position: relative; /* Crucial for positioning the options menu */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
   border-radius: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   cursor: pointer;
   font-size: 0.9rem;
   transition: background-color 0.2s ease;
+  margin-bottom: 2px;
 }
 
 .history-item:hover {
@@ -117,248 +121,178 @@ body {
   font-weight: 500;
 }
 
-
-/* === WELCOME SCREEN & CARDS === */
-.welcome-screen {
+.history-item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  text-align: center;
+  padding-right: 5px;
 }
 
-.welcome-logo {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end));
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.welcome-logo svg {
-  width: 32px;
-  height: 32px;
-  fill: white;
-}
-
-.welcome-screen h1 {
-  font-size: 2.5rem;
-  font-weight: 500;
-  background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
-}
-
-.welcome-screen p {
-  color: var(--secondary-text-color);
-  font-size: 1.2rem;
-  margin-top: 8px;
-}
-
-.prompt-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 40px;
-  width: 100%;
-  max-width: 600px;
-}
-
-.card {
-  background-color: var(--card-bg-color);
-  padding: 15px;
-  border-radius: 8px;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  border: 1px solid transparent;
-}
-
-.card:hover {
-  background-color: var(--card-hover-bg);
-  border-color: var(--border-color);
-}
-
-.card-title {
-  font-weight: 600;
-  margin: 0;
-}
-
-/* === CHAT WINDOW & MESSAGES === */
-.chat-window {
-  flex-grow: 1;
-  padding: 20px 20px 0 20px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.message-wrapper {
-  display: flex;
-  gap: 15px;
-  max-width: 90%;
-}
-
-.message-wrapper.user {
-  align-self: flex-end;
-  flex-direction: row-reverse;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--card-bg-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0; 
-}
-.avatar svg, .avatar img {
-  width: 24px;
-  height: 24px;
-  fill: var(--text-color);
-}
-.avatar.gemini-logo {
-   background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end));
-}
-.avatar.gemini-logo svg {
-  fill: white;
-}
-
-
-.message {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-}
-
-.message-text {
-  line-height: 1.6;
-}
-/* Markdown Styles */
-.message-text p { margin: 0 0 10px 0; }
-.message-text pre {
-  background-color: #0d0d0d;
-  padding: 15px;
-  border-radius: 8px;
-  overflow-x: auto;
-  border: 1px solid var(--border-color);
-}
-.message-text code {
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.message-time {
-  font-size: 0.75rem;
-  margin-top: 8px;
-  color: var(--secondary-text-color);
-  align-self: flex-start;
-}
-
-/* "Bot is typing..." shimmer animation */
-@keyframes shimmer {
-  0% { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
-}
-.shimmer {
-  animation: shimmer 1.5s infinite linear;
-  background: linear-gradient(to right, var(--card-bg-color) 20%, #4a4b4d 50%, var(--card-bg-color) 80%);
-  background-size: 800px 104px;
-  width: 150px;
-  height: 20px;
-  border-radius: 4px;
-}
-
-/* === INPUT AREA === */
-.input-area-container {
-  padding: 20px;
-}
-
-.input-form {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: var(--input-bg-color);
-  border-radius: 25px;
-  padding: 5px 5px 5px 20px;
-  border: 1px solid var(--border-color);
-}
-
-.input-form textarea {
-  flex-grow: 1;
-  background: transparent;
+.chat-options-btn {
+  background: none;
   border: none;
-  color: var(--text-color);
-  font-size: 1rem;
-  resize: none;
-  height: 24px;
-  max-height: 100px;
-  line-height: 24px;
-  padding: 8px 0;
-  outline: none;
-}
-.input-form textarea::placeholder {
   color: var(--secondary-text-color);
-}
-
-.input-form button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--card-hover-bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.input-form button:hover:not(:disabled) {
-  background-color: #4f5052;
-}
-.input-form button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* === FINAL ICON STYLE FIX === */
-/* This single rule will control all icons inside the input form's buttons */
-.input-form button svg {
-  width: 20px;
-  height: 20px;
-  fill: var(--text-color);
-  
-  /* THIS IS THE FIX: Prevents the icon from shrinking inside the button */
-  flex-shrink: 0; 
-  
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
   transition: all 0.2s ease;
 }
 
-/* Specific style for the listening microphone icon to turn it red */
-.mic-btn.listening {
-  background-color: #d930252a;
-  animation: pulse 1.5s infinite;
+.history-item:hover .chat-options-btn,
+.history-item.active .chat-options-btn {
+    opacity: 1;
 }
 
-.mic-btn.listening svg {
-  fill: #d93025;
+.chat-options-btn:hover {
+  background-color: var(--card-hover-bg);
+  color: var(--text-color); 
 }
 
+.options-menu {
+  position: absolute;
+  top: 10px; 
+  right: 40px;
+  background-color: #343541;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  padding: 8px;
+  z-index: 10;
+  width: 180px;
+}
+
+.option-item {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  padding: 10px 12px;
+  width: 100%;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.option-item:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.option-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.option-item.delete {
+  color: #ff5c5c;
+}
+
+.rename-input {
+  width: 100%;
+  background-color: var(--input-bg-color);
+  border: 1px solid var(--accent-color-start);
+  border-radius: 6px;
+  color: var(--text-color);
+  padding: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+
+/* === WELCOME SCREEN & CARDS === */
+.welcome-screen {
+  flex-grow: 1; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; padding: 20px; text-align: center;
+}
+.welcome-logo {
+  width: 60px; height: 60px; background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end));
+  border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 24px;
+}
+.welcome-logo svg { width: 32px; height: 32px; fill: white; }
+.welcome-screen h1 {
+  font-size: 2.5rem; font-weight: 500; background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;
+} 
+.welcome-screen p { color: var(--secondary-text-color); font-size: 1.2rem; margin-top: 8px; }
+.prompt-cards {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 40px;
+  width: 100%; max-width: 600px;
+}
+.card {
+  background-color: var(--card-bg-color); padding: 15px; border-radius: 8px; text-align: left; cursor: pointer;
+  transition: background-color 0.2s ease; border: 1px solid transparent;
+}
+.card:hover { background-color: var(--card-hover-bg); border-color: var(--border-color); }
+.card-title { font-weight: 600; margin: 0; }
+
+/* === CHAT WINDOW & MESSAGES === */
+.chat-window {
+  flex-grow: 1; padding: 20px 20px 0 20px; overflow-y: auto; display: flex;
+  flex-direction: column; gap: 24px;
+}
+.message-wrapper { display: flex; gap: 15px; max-width: 90%; }
+.message-wrapper.user { align-self: flex-end; flex-direction: row-reverse; }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%; background-color: var(--card-bg-color);
+  display: flex; justify-content: center; align-items: center; flex-shrink: 0; 
+}
+.avatar svg, .avatar img { width: 24px; height: 24px; fill: var(--text-color); }
+.avatar.gemini-logo { background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end)); }
+.avatar.gemini-logo svg { fill: white; }
+.message { display: flex; flex-direction: column; padding: 0; }
+.message-text { line-height: 1.6; }
+.message-text p { margin: 0 0 10px 0; }
+.message-text pre {
+  background-color: #0d0d0d; padding: 15px; border-radius: 8px; overflow-x: auto;
+  border: 1px solid var(--border-color);
+}
+.message-text code { font-family: 'Courier New', Courier, monospace; }
+.message-time { font-size: 0.75rem; margin-top: 8px; color: var(--secondary-text-color); align-self: flex-start; }
+@keyframes shimmer {
+  0% { background-position: -400px 0; } 100% { background-position: 400px 0; }
+}
+.shimmer {
+  animation: shimmer 1.5s infinite linear; background: linear-gradient(to right, var(--card-bg-color) 20%, #4a4b4d 50%, var(--card-bg-color) 80%);
+  background-size: 800px 104px; width: 150px; height: 20px; border-radius: 4px;
+}
+
+/* === INPUT AREA & ICONS === */
+.input-area-container { padding: 20px; }
+.input-form {
+  display: flex; align-items: center; gap: 10px; background-color: var(--input-bg-color);
+  border-radius: 25px; padding: 5px 5px 5px 20px; border: 1px solid var(--border-color);
+}
+.input-form textarea {
+  flex-grow: 1; background: transparent; border: none; color: var(--text-color); font-size: 1rem;
+  resize: none; height: 24px; max-height: 100px; line-height: 24px; padding: 8px 0; outline: none;
+}
+.input-form textarea::placeholder { color: var(--secondary-text-color); }
+.input-form button {
+  width: 40px; height: 40px; border-radius: 50%; border: none; background-color: transparent;
+  display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background-color 0.2s ease;
+}
+.input-form button.mic-btn:hover { background-color: var(--card-hover-bg); }
+.input-form button[type="submit"] { background-color: var(--card-hover-bg); }
+.input-form button:hover:not(:disabled) { background-color: #4f5052; }
+.input-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.input-form button svg {
+  width: 20px; height: 20px; fill: var(--text-color); flex-shrink: 0; transition: all 0.2s ease;
+}
+.mic-btn.listening { background-color: #d930252a; animation: pulse 1.5s infinite; }
+.mic-btn.listening svg { fill: #d93025; }
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 #d9302550; }
-  70% { box-shadow: 0 0 0 10px #d9302500; }
+  0% { box-shadow: 0 0 0 0 #d9302550; } 70% { box-shadow: 0 0 0 10px #d9302500; }
   100% { box-shadow: 0 0 0 0 #d9302500; }
 }
-
-/* A nice hover effect for all icons */
-.input-form button:not(:disabled):hover svg {
-  transform: scale(1.1);
-}
+.input-form button:not(:disabled):hover svg { transform: scale(1.1); }

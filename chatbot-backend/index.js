@@ -25,7 +25,7 @@ app.post('/api/chat', async (req, res) => {
 
     // Forward the request to the Ollama API
     const ollamaResponse = await axios.post(OLLAMA_API_URL, {
-      model: 'deepseek-chat', // We updated this to the general chat model
+      model: 'deepseek-coder', // We updated this to the general chat model
       prompt: prompt,
       stream: false // To receive the response in a single chunk
     });

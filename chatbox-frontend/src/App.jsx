@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
@@ -10,29 +12,42 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  // Load chats from localStorage on initial render
+  
   useEffect(() => {
     let loadedChats = [];
     try {
       const savedChats = localStorage.getItem('chat_history');
       if (savedChats) {
         loadedChats = JSON.parse(savedChats);
-        setChats(loadedChats);
       }
     } catch (error) {
       console.error("Failed to parse chats from localStorage", error);
+      loadedChats = []; // If parsing fails, start with a clean slate
     }
-    
-    const savedCurrentId = localStorage.getItem('current_chat_id');
-    if(savedCurrentId && loadedChats.some(c => c.id === savedCurrentId)) {
-      setCurrentChatId(savedCurrentId);
-    } else if (loadedChats.length > 0) {
-      setCurrentChatId(loadedChats[0].id);
+
+    if (loadedChats.length > 0) {
+      // Chats exist in storage ---
+      setChats(loadedChats);
+      const savedCurrentId = localStorage.getItem('current_chat_id');
+      
+      // Check if the saved active chat ID is valid
+      if (savedCurrentId && loadedChats.some(c => c.id === savedCurrentId)) {
+        setCurrentChatId(savedCurrentId);
+      } else {
+        // If not, default to the first chat in the list
+        setCurrentChatId(loadedChats[0].id);
+      }
     } else {
-      handleNewChat(loadedChats); // Use a function to avoid direct state manipulation in initial load
+      // NO chats exist in storage ---
+      // Only create a new chat if storage is completely empty.
+      const newChatId = Date.now().toString();
+      const newChat = { id: newChatId, title: 'New Chat', messages: [], isPinned: false };
+      setChats([newChat]);
+      setCurrentChatId(newChatId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, []);
+
 
   // Save chats to localStorage whenever they change
   useEffect(() => {
@@ -51,7 +66,7 @@ function App() {
   const getFormattedTime = () => new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
   // --- Chat Management Functions ---
-  const handleNewChat = (currentChats = chats) => {
+  const handleNewChat = () => {
     const newChatId = Date.now().toString();
     const newChat = {
       id: newChatId,
@@ -66,19 +81,22 @@ function App() {
   const handleSelectChat = (id) => setCurrentChatId(id);
 
   const handleDeleteChat = (idToDelete) => {
-    const newChats = chats.filter(chat => chat.id !== idToDelete);
-    setChats(newChats);
-
-    if (currentChatId === idToDelete) {
+    setChats(prevChats => {
+      const newChats = prevChats.filter(chat => chat.id !== idToDelete);
+      if (currentChatId === idToDelete) {
         if (newChats.length > 0) {
-            // Select the first chat from the remaining chats
-            const firstChat = chats.find(c => c.id !== idToDelete);
-            setCurrentChatId(firstChat ? firstChat.id : null);
+          const firstPinned = newChats.find(c => c.isPinned);
+          setCurrentChatId(firstPinned ? firstPinned.id : newChats[0].id);
         } else {
-            // If no chats are left, create a new one
-            handleNewChat([]); 
+          // If no chats left, create a new one automatically
+          const newChatId = Date.now().toString();
+          const newChat = { id: newChatId, title: 'New Chat', messages: [], isPinned: false };
+          setCurrentChatId(newChatId);
+          return [newChat];
         }
-    }
+      }
+      return newChats;
+    });
   };
 
   const handleRenameChat = (idToRename, newTitle) => {
@@ -95,7 +113,6 @@ function App() {
 
   const handleSendMessage = async (promptText) => {
     if (!promptText || promptText.trim() === '' || !currentChatId) return;
-
     const userMessage = { text: promptText, sender: 'user', timestamp: getFormattedTime() };
     
     setChats(prevChats => prevChats.map(chat => {

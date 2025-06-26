@@ -6,7 +6,7 @@ A modern, full-stack, AI-powered chatbot application featuring a responsive user
 
 ## Features
 
-- **Modern UI/UX:** Sleek, dark-mode interface inspired by Gemini.
+- **Modern UI/UX:** Sleek, dark-mode interface.
 - **Persistent Chat History:** Conversations are automatically saved to the browser's Local Storage and loaded on startup.
 - **Full Chat Management:**
     - Create new chats.

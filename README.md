@@ -1,48 +1,55 @@
-# AiChat
+# AiChat - A Full-Stack AI Chat Application
 
-## Overview
-AiChat is a modern AI-powered chat application that allows users to interact with a chatbot. The chatbot can respond to user queries and provide dynamic responses based on input.
+A modern, full-stack, AI-powered chatbot application featuring a responsive user interface inspired by Gemini. It runs a local language model via Ollama, providing a private and powerful chat experience with persistent conversation history.
+
+---
 
 ## Features
-- User-friendly interface with message bubbles.
-- Real-time chat functionality.
-- AI integration for dynamic responses.
-- Timestamps for each message.
-- Responsive design for various screen sizes.
 
-## Technologies Used
-- React.js for building the user interface.
-- CSS for styling the application.
-- Fetch API for making requests to the AI service.
+- **Modern UI/UX:** Sleek, dark-mode interface inspired by Gemini.
+- **Persistent Chat History:** Conversations are automatically saved to the browser's Local Storage and loaded on startup.
+- **Full Chat Management:**
+    - Create new chats.
+    - Automatically titles new chats based on the first prompt.
+    - Rename, Pin, and Delete conversations.
+- **Advanced Code Rendering:**
+    - Full Markdown support for bot responses.
+    - Syntax highlighting for dozens of programming languages in code blocks.
+    - One-click "Copy" button for easy code snippet usage.
+    - Word wrapping for long lines of code to prevent horizontal scrolling.
+- **Advanced Input Methods:**
+    - **Voice Input:** Use your microphone for speech-to-text to enter prompts.
+- **Real-time Feedback:** "Bot is typing..." indicator while waiting for a response.
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/rdvankck/AiChat.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd AiChat
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+---
 
-## Usage
-To start the application, run:
+## Tech Stack
+
+This is a full-stack project with a separate frontend and backend.
+
+**Frontend:**
+- **Framework:** React (bootstrapped with Vite)
+- **Styling:** Plain CSS with CSS Variables
+- **API Communication:** Axios
+- **Markdown & Syntax Highlighting:** `react-markdown`, `react-syntax-highlighter`
+- **Voice Recognition:** Web Speech API
+
+**Backend:**
+- **Framework:** Node.js with Express.js
+- **Middleware:** `cors` for handling cross-origin requests.
+- **API Communication:** `axios` (to communicate with the Ollama service)
+
+**AI:**
+- **Platform:** Ollama
+- **Model:** `deepseek-coder` (or any other model supported by Ollama)
+
+---
+
+## Local Setup and Installation
+
+To run this project locally, you will need Node.js, npm, and Ollama installed.
+
+**1. Clone the Repository**
 ```bash
-npm start
-```
-Open your browser and navigate to `http://localhost:3000` to use the chat application.
-
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or features.
-
-## License
-This project is licensed under the MIT License.
-
-
-## Ollama used for this project.
- 1. Ollama -> Deepseek-coder
-
+git clone [https://github.com/rdvankck/AiChat.git](https://github.com/rdvankck/AiChat.git)
+cd AiChat
